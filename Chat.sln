@@ -5,6 +5,12 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGPT", "ChatGPT\ChatGPT.csproj", "{9DBD3CD9-6FF4-46D7-80EA-588AC460A592}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.API", "Chat.API\Chat.API.csproj", "{793CB19E-04F8-431C-BCBC-BB0AA4493F36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Domain", "Chat.Domain\Chat.Domain.csproj", "{D29F0AC9-FA13-4D54-AE76-86CCD36EFE1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataAccess", "Chat.DataAccess\Chat.DataAccess.csproj", "{FAD53F6F-CF5A-4FC0-8D69-E4095DB56753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{9DBD3CD9-6FF4-46D7-80EA-588AC460A592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DBD3CD9-6FF4-46D7-80EA-588AC460A592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DBD3CD9-6FF4-46D7-80EA-588AC460A592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793CB19E-04F8-431C-BCBC-BB0AA4493F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793CB19E-04F8-431C-BCBC-BB0AA4493F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793CB19E-04F8-431C-BCBC-BB0AA4493F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793CB19E-04F8-431C-BCBC-BB0AA4493F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29F0AC9-FA13-4D54-AE76-86CCD36EFE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29F0AC9-FA13-4D54-AE76-86CCD36EFE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29F0AC9-FA13-4D54-AE76-86CCD36EFE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29F0AC9-FA13-4D54-AE76-86CCD36EFE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD53F6F-CF5A-4FC0-8D69-E4095DB56753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD53F6F-CF5A-4FC0-8D69-E4095DB56753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD53F6F-CF5A-4FC0-8D69-E4095DB56753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD53F6F-CF5A-4FC0-8D69-E4095DB56753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
