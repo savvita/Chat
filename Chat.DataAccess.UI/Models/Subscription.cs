@@ -14,7 +14,9 @@ namespace Chat.DataAccess.UI.Models
         [Required]
         public decimal Price { get; set; }
 
-        public List<SubscriptionAbility> SubscriptionAbilities { get; } = new List<SubscriptionAbility>();
+        public int? MaxCount { get; set; }
+
+        public List<Ability> Abilities { get; } = new List<Ability>();
 
         public Subscription()
         {
@@ -26,9 +28,10 @@ namespace Chat.DataAccess.UI.Models
             Id = model.Id;
             Name = model.Name;
             Price = model.Price;
-            model.SubscriptionAbilities.ToList().ForEach(x =>
+            MaxCount = model.MaxCount;
+            model.Abilities.ToList().ForEach(x =>
             {
-                SubscriptionAbilities.Add(new SubscriptionAbility(x));
+                Abilities.Add(new Ability(x));
             });
         }
 
@@ -38,12 +41,13 @@ namespace Chat.DataAccess.UI.Models
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Price = entity.Price
+                Price = entity.Price,
+                MaxCount = entity.MaxCount
             };
 
-            entity.SubscriptionAbilities.ForEach(x =>
+            entity.Abilities.ForEach(x =>
             {
-                model.SubscriptionAbilities.Add((SubscriptionAbilityModel)x);
+                model.Abilities.Add((AbilityModel)x);
             });
 
             return model;

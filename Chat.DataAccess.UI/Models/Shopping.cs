@@ -9,7 +9,6 @@ namespace Chat.DataAccess.UI.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string UserId { get; set; } = null!;
 
         public virtual Subscription? Subscription { get; set; }

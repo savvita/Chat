@@ -11,7 +11,6 @@ namespace Chat.DataAccess.UI.Models
         [MaxLength(50)]
         public string Name { get; set; } = null!;
 
-        public List<SubscriptionAbility> SubscriptionAbilities { get; } = new List<SubscriptionAbility>();
         public Ability()
         {
         }
@@ -20,10 +19,6 @@ namespace Chat.DataAccess.UI.Models
         {
             Id = model.Id;
             Name = model.Name;
-            model.SubscriptionAbilities.ToList().ForEach(x =>
-            {
-                SubscriptionAbilities.Add(new SubscriptionAbility(x));
-            });
         }
 
         public static explicit operator AbilityModel(Ability entity)
@@ -34,10 +29,6 @@ namespace Chat.DataAccess.UI.Models
                 Name = entity.Name
             };
 
-            entity.SubscriptionAbilities.ForEach(x =>
-            {
-                model.SubscriptionAbilities.Add((SubscriptionAbilityModel)x);
-            });
 
             return model;
         }

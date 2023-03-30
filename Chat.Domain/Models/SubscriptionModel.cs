@@ -13,6 +13,8 @@ namespace Chat.Domain.Models
         [Required]
         public decimal Price { get; set; }
 
-        public virtual ICollection<SubscriptionAbilityModel> SubscriptionAbilities { get; } = new List<SubscriptionAbilityModel>();
+        public int? MaxCount { get; set; }
+
+        public virtual ICollection<AbilityModel> Abilities { get; } = new List<AbilityModel>();
     }
 }

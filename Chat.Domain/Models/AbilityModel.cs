@@ -9,8 +9,6 @@ namespace Chat.Domain.Models
         [Required]
         [MaxLength(50)]
         public string Name { get; set; } = null!;
-
-        public virtual ICollection<SubscriptionAbilityModel> SubscriptionAbilities { get; } = new List<SubscriptionAbilityModel>();
-
+        public virtual ICollection<SubscriptionModel> Subscriptions { get; } = new List<SubscriptionModel>();
     }
 }

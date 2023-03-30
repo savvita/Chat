@@ -12,8 +12,6 @@ namespace Chat.DataAccess.UI.Models
         public DateTime? BannedUntil { get; set; } = null;
         public int Requests { get; }
         public virtual Subscription? Subscription { get; set; }
-        public List<Shopping> ShoppingHistory { get; } = new List<Shopping>();
-        public List<Request> RequestHistory { get; } = new List<Request>();
 
         public User()
         {
@@ -30,16 +28,6 @@ namespace Chat.DataAccess.UI.Models
             {
                 Subscription = new Subscription(model.Subscription);
             }
-
-            model.ShoppingHistory.ToList().ForEach(x =>
-            {
-                ShoppingHistory.Add(new Shopping(x));
-            });
-
-            model.RequestHistory.ToList().ForEach(x =>
-            {
-                RequestHistory.Add(new Request(x));
-            });
         }
 
         public static explicit operator UserModel(User entity)
@@ -48,7 +36,8 @@ namespace Chat.DataAccess.UI.Models
             {
                 Id = entity.Id,
                 UserName = entity.UserName,
-                BannedUntil = entity.BannedUntil
+                BannedUntil = entity.BannedUntil,
+                Requests = entity.Requests
             };
 
             if (entity.Subscription != null)
@@ -56,16 +45,6 @@ namespace Chat.DataAccess.UI.Models
                 model.Subscription = (SubscriptionModel)entity.Subscription;
                 model.SubscriptionId = entity.Subscription.Id;
             }
-
-            entity.ShoppingHistory.ForEach(x =>
-            {
-                model.ShoppingHistory.Add((ShoppingModel)x);
-            });
-
-            entity.RequestHistory.ForEach(x =>
-            {
-                model.RequestHistory.Add((RequestModel)x);
-            });
 
             return model;
         }

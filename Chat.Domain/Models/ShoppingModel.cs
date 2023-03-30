@@ -8,7 +8,6 @@ namespace Chat.Domain.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string UserId { get; set; } = null!;
         public virtual UserModel? User { get; set; }
 

@@ -9,7 +9,6 @@ namespace Chat.DataAccess.UI.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string UserId { get; set; } = null!;
 
         [Required]
@@ -17,6 +16,7 @@ namespace Chat.DataAccess.UI.Models
         public string RequestMessage { get; set; } = null!;
 
         public string? ResponseMessage { get; set; } = null;
+
 
         public Request()
         {
@@ -34,14 +34,16 @@ namespace Chat.DataAccess.UI.Models
 
         public static explicit operator RequestModel(Request entity)
         {
-            return new RequestModel()
+            var model = new RequestModel()
             {
                 Id = entity.Id,
                 Date = entity.Date,
                 UserId = entity.UserId,
                 RequestMessage = entity.RequestMessage,
-                ResponseMessage = entity.RequestMessage
+                ResponseMessage = entity.ResponseMessage
             };
+
+            return model;
         }
     }
 }
