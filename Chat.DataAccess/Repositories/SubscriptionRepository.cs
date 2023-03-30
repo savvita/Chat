@@ -20,12 +20,12 @@ namespace Chat.DataAccess.Repositories
 
         public async Task<IEnumerable<SubscriptionModel>> GetAsync()
         {
-            return await _db.Subscriptions.ToListAsync();
+            return await _db.Subscriptions.Include(x => x.Abilities).ToListAsync();
         }
 
         public Task<SubscriptionModel?> GetAsync(int id)
         {
-            return _db.Subscriptions.FirstOrDefaultAsync(x => x.Id == id);
+            return _db.Subscriptions.Include(x => x.Abilities).FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

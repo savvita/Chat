@@ -12,6 +12,11 @@ namespace Chat.DataAccess.UI.Repositories
             _db = db;
         }
 
+        public async Task<bool> CreateAsync(string userId, Subscription entity)
+        {
+            return await _db.BuySubscriptionAsync(userId, (SubscriptionModel)entity);
+        }
+
         public async Task<Shopping?> CreateAsync(Shopping entity)
         {
             var model = await _db.Shoppings.CreateAsync((ShoppingModel)entity);
@@ -29,6 +34,11 @@ namespace Chat.DataAccess.UI.Repositories
             var model = await _db.Shoppings.GetAsync(id);
 
             return model != null ? new Shopping(model) : null;
+        }
+
+        public async Task<List<Shopping>> GetUserShoppingsAsync(string id)
+        {
+            return (await _db.Shoppings.GetUserShoppingsAsync(id)).Select(x => new Shopping(x)).ToList();
         }
     }
 }

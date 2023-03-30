@@ -27,5 +27,18 @@ namespace Chat.DataAccess.Repositories
         {
             return _db.Requests.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public Task<List<RequestModel>> GetUserRequestsAsync(string userId)
+        {
+            return Task.FromResult(_db.Requests.Where(x => x.UserId == userId).ToList());
+        }
+
+        public async Task<RequestModel> UpdateAsync(RequestModel entity)
+        {
+            var res = _db.Requests.Update(entity);
+            await _db.SaveChangesAsync();
+
+            return res.Entity;
+        }
     }
 }

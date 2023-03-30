@@ -12,6 +12,7 @@ namespace Chat.DataAccess.Repositories
 
         public async Task<UserModel?> CreateAsync(UserModel entity)
         {
+            entity.SubscriptionId = 1;
             var res = (await _db.Users.AddAsync(entity)).Entity;
             await _db.SaveChangesAsync();
 
@@ -21,29 +22,27 @@ namespace Chat.DataAccess.Repositories
         public async Task<IEnumerable<UserModel>> GetAsync()
         {
             return await _db.Users
-                .Include(x => x.ShoppingHistory)
                 .Include(x => x.Subscription)
                 .ToListAsync();
         }
 
-        public async Task<UserModel?> GetAsync(string id, bool history = false)
+        public async Task<UserModel?> GetAsync(string id)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if(user == null)
-            {
-                return null;
-            }
+            return await _db.Users.Include(x => x.Subscription).ThenInclude(x => x.Abilities).FirstOrDefaultAsync(x => x.Id == id);
+        }
 
-            if(history == true)
-            {
-                _db.Requests
-                    .Where(x => x.UserId == id)
-                    .ToList()
-                    .ForEach(x => user.RequestHistory.Add(x));
-                
-            }
+        public async Task<UserModel?> GetByUserNameAsync(string username)
+        {
+            return await Task.FromResult<UserModel?>(_db.Users.Include(x => x.Subscription).ThenInclude(x => x.Abilities).FirstOrDefault(u => u.UserName.Equals(username)));
+        }
 
-            return user;
+        public async Task<UserModel?> UpdateAsync(UserModel entity)
+        {
+            var res = _db.Users.Update(entity);
+
+            await _db.SaveChangesAsync();
+
+            return res.Entity;
         }
     }
 }

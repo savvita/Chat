@@ -5,5 +5,6 @@ namespace Chat.DataAccess.UI.Interfaces
     public interface IRequestRepository : IGenericRepository<Request>
     {
         Task<Request?> GetAsync(int id);
+        Task<List<Request>> GetUserRequestsAsync(string userId);
     }
 }

@@ -30,5 +30,10 @@ namespace Chat.DataAccess.UI.Repositories
 
             return model != null ? new Request(model) : null;
         }
+
+        public async Task<List<Request>> GetUserRequestsAsync(string userId)
+        {
+            return (await _db.Requests.GetUserRequestsAsync(userId)).Select(model => new Request(model)).ToList();
+        }
     }
 }
