@@ -77,11 +77,19 @@ namespace Chat.S3
             };
 
             var transcriptionJobResponse = await _transcribeClient.StartTranscriptionJobAsync(startJobRequest);
+            var getJobRequest = new GetTranscriptionJobRequest() { TranscriptionJobName = startJobRequest.TranscriptionJobName };
 
             if (transcriptionJobResponse.HttpStatusCode != HttpStatusCode.OK)
             {
                 return String.Empty;
             }
+            GetTranscriptionJobResponse getJobResponse;
+            do
+            {
+                Thread.Sleep(1000);
+                getJobResponse = await _transcribeClient.GetTranscriptionJobAsync(getJobRequest);
+            } while (getJobResponse.TranscriptionJob.TranscriptionJobStatus == TranscriptionJobStatus.IN_PROGRESS);
+
 
             var data = await _access.DownloadFromBucketAsync(bucket, transcriptFileName);
 

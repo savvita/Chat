@@ -33,7 +33,7 @@ namespace Chat.API.Controllers
 
         [HttpPost("")]
         [Authorize]
-        public async Task<Result<string>> Rekognize(IFormFileCollection upload)
+        public async Task<Result<string>> Rekognize(IFormFileCollection upload, [FromQuery]string? lang)
         {
             await _context.Users.CheckUserAsync(User.Identity);
             var username = User.FindFirst(c => c.Type == ClaimTypes.Name);
@@ -69,9 +69,9 @@ namespace Chat.API.Controllers
                 {
                     result = _rekognition.RekognizeFromImage(_bucketName, fileName);
                 }
-                else if (Request.Form.Files[0].ContentType.StartsWith("audio"))
+                else if (Request.Form.Files[0].ContentType.StartsWith("audio") || Request.Form.Files[0].ContentType.Equals("video/webm"))
                 {
-                    result = await _rekognition.TranscribeMediaFile(_bucketName, fileName, "en-US");
+                    result = await _rekognition.TranscribeMediaFile(_bucketName, fileName, lang ?? "en-US");
                 }
             }
 
@@ -83,12 +83,46 @@ namespace Chat.API.Controllers
             };
         }
 
+        [HttpGet("")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<Result<List<string>>> Get()
+        {
+            await _context.Users.CheckUserAsync(User.Identity);
+            var username = User.FindFirst(c => c.Type == ClaimTypes.Name);
+
+            if (username == null)
+            {
+                throw new InternalServerException();
+            }
+
+            var user = await _context.Users.GetByUserNameAsync(username.Value);
+
+            if (user == null)
+            {
+                throw new UserNotFoundException(username.Value);
+            }
+
+            var claims = await _context.Users.GetClaimsAsync((UserModel)user);
+
+            var res = (await _access.ListBucketContentAsync(_bucketName)).Select(x => x.Key).ToList();
+
+            return new Result<List<string>>
+            {
+                Value = res,
+                Hits = res.Count(),
+                Token = new JwtSecurityTokenHandler().WriteToken(JwtHelper.GetToken(claims, _configuration))
+            };
+        }
+
         [HttpDelete("")]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Remove([FromQuery] string objectName)
+        public async Task<IActionResult> Remove([FromBody] List<string> files)
         {
-            var res = await _access.DeleteFromBucketAsync(_bucketName, objectName);
-            return Ok(res);
+            files.ForEach(async file =>
+            {
+                await _access.DeleteFromBucketAsync(_bucketName, file);
+            });
+            return Ok();
         }
     }
 }
